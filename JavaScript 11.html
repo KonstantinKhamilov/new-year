@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>JavaScript11</title>
+    
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" lang="ru" content="Стили css">
+        <meta name="author" content="Константин">
+        <meta name="keywords" content="Программирование, уроки JavaScript">
+        <meta name="robots" content="all">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="newYear.css" type="text/css">
+</head>
+
+<body>
+   <!--
+     <h1><u>Задание 1</u></h1> 
+    <p>Необходимо реализовать функцию, описывающую окружность.В функции должны быть следующие компоненты:</p> 
+<ul type="disk">
+    <li>поле, хранящее радиус окружности;</li>
+    <li>get-свойство, возвращающее радиус окружности;</li>
+    <li>set-свойство, устанавливающее радиус окружности;</li>
+    <li>get-свойство, возвращающее диаметр окружности;</li>
+    <li>метод, вычисляющий площадь окружности;</li>
+    <li>метод, вычисляющий длину окружности.</li>
+</ul>
+       <p>Продемонстрируйте работу свойств и методов.</p>
+       <p>Введите радиус окружности: </p>
+       <input type="text" id="rad">
+        <button onclick="showResults()">Показать результаты</button>
+        <p id="output"></p>
+
+          <h1><u>Задание 2</u></h1>
+          <p>Реализуйте функцию, которая описывает css класс.функция CssClass должна содержать внутри себя:</p>
+          <ul type="square">
+<li>название css класса;</li>
+<li>массив стилей;</li>
+<li>метод для установки стиля;</li>
+<li>метод для удаления стиля;</li>
+<li>метод getCss(), который возвращает css код в виде строки.</li>
+          </ul>
+
+          <p>Введите название класса:</p>
+    <input type="text" id="class" />
+    <button onclick="showCSS()">Показать результат генерации</button>
+    <p id="output1"></p>
+
+    <p>Добавить стиль:</p>
+    <input type="text" id="add-style" />
+    <button onclick="addStyle()">Добавить</button>
+
+    <p>Удалить стиль:</p>
+    <input type="text" id="remove-style" />
+    <button onclick="removeStyle()">Удалить</button>
+
+  <h1><u>Задание 3</u></h1>  
+  <p>
+    Рассчитайте, сколько дней, часов, минут и секунд осталось до Нового года. Выведите эти значения красиво,
+    методом document.write() или другим с тегами -p- и
+    -span- и классами для них. Стили можно записать в отдельном css-файле. Если одно из чисел будет меньше 10,
+    то его нужно вывести с ведущим 0, например, так:
+    Сделайте свой скрипт универсальным, задав дату следующего Нового года относительно текущей даты с помощью методов объекта Date.
+  </p>
+  <p>Пример вывода результата задания:</p>
+<img src="D:\Full Stack\Модуль\JavaScript\JavaScript11\Безымянный1.png" alt="time">
+-->
+<div class="box">
+  <h1>До Нового року залишилось:</h1>
+  <div class="count">
+    <div class="timer"><h2 id="day">00</h2><p>Дней</p></div>
+    <div class="timer"><h2 id="hrs">00</h2><p>Часов</p></div>
+    <div class="timer"><h2 id="min">00</h2><p>Минут</p></div>
+    <div class="timer"><h2 id="sec">00</h2><p>Секунд</p></div>
+  </div>
+</div>
+
+    <script>
+/*
+        //1
+function Circle(radius) {
+  // Сохранение значения радиуса в свойстве объекта
+  this.radius = radius;
+  // Определение get-свойства для получения значения радиуса
+  Object.defineProperty(this, 'radius', {
+    get: function() {
+      // Возвращение значения радиуса
+      return radius;
+    },
+    // Определение set-свойства для установки значения радиуса
+    set: function(value) {
+      // Проверка на корректность значения радиуса
+      if (value <= 0) throw new Error('Invalid radius');
+      // Установка нового значения радиуса
+      radius = value;
+    }
+  });
+
+  // Определение get-свойства для получения значения диаметра окружности
+  Object.defineProperty(this, 'diameter', {
+    get: function() {
+      // Возвращение значения диаметра, равного удвоенному радиусу
+      return 2 * radius;
+    }
+  });
+
+  // Определение метода для вычисления площади окружности
+  this.area = function() {
+    // Возвращение площади окружности, вычисленной как произведение числа Пи на квадрат радиуса
+    return Math.PI * Math.pow(radius, 2);
+  }
+
+  // Определение метода для вычисления длины окружности
+  this.circumference = function() {
+    // Возвращение длины окружности, вычисленной как произведение числа Пи на удвоенный радиус
+    return 2 * Math.PI * radius;
+  }
+}
+
+function showResults() {
+    let input = document.getElementById("rad").value;
+    let circle = new Circle(input);
+    let output = 'Радиус: ' + circle.radius + '<br>';
+    output += 'Диаметр: ' + circle.diameter + '<br>';
+    output += 'Площадь: ' + circle.area() + '<br>';
+    output += 'Длинна окружности: ' + circle.circumference();
+    document.getElementById("output").innerHTML = output;
+  }
+
+  //2
+  
+      // Определение функции CssClass, которая принимает название CSS класса в качестве аргумента
+      function CssClass(className) {
+        // Сохранение значения названия CSS класса в свойстве объекта
+        this.className = className;
+        // Создание пустого массива для хранения стилей CSS класса
+        this.styles = [];
+
+        // Определение метода setStyle для добавления нового стиля в массив стилей
+        this.setStyle = function(style) {
+          // Добавление нового стиля в конец массива стилей
+          this.styles.push(style);
+        }
+
+        // Определение метода removeStyle для удаления существующего стиля из массива стилей
+        this.removeStyle = function(style) {
+          // Поиск индекса указанного стиля в массиве стилей
+          let index = this.styles.indexOf(style);
+          // Если стиль найден в массиве
+          if (index !== -1) {
+            // Удаление стиля из массива по найденному индексу
+            this.styles.splice(index, 1);
+          }
+        }
+
+        // Определение метода getCss для генерации CSS кода класса в виде строки
+        this.getCss = function() {
+          // Создание строки с селектором CSS класса и открывающей скобкой
+          let cssString = '.' + this.className + ' {\n';
+          // Цикл по всем стилям в массиве стилей
+          for (let i = 0; i < this.styles.length; i++) {
+            // Добавление очередного стиля в строку с отступом и точкой с запятой
+            cssString += '  ' + this.styles[i] + ';\n';
+          }
+          // Добавление закрывающей скобки в конец строки
+          cssString += '}';
+          // Возвращение сгенерированной строки с CSS кодом класса
+          return cssString;
+        }
+      }
+      let myClass;
+
+      function showCSS() {
+        // Получение значения из элемента input с id 'class'
+        let className = document.getElementById('class').value;
+        // Создание нового объекта CssClass с названием класса из элемента input
+        myClass = new CssClass(className);
+        // Добавление стиля 'color: red' в массив стилей класса
+        myClass.setStyle('color: red');
+        // Добавление стиля 'font-size: 16px' в массив стилей класса
+        myClass.setStyle('font-size: 16px');
+        // Вывод сгенерированного CSS кода класса в элемент p с id 'output'
+        document.getElementById('output1').innerHTML = myClass.getCss();
+      }
+
+      function addStyle() {
+        if (!myClass) {
+          alert('Сначала нажмите кнопку "Показать результат генерации"');
+          return;
+        }
+        // Получение значения из элемента input с id 'add-style'
+        let style = document.getElementById('add-style').value;
+        // Добавление стиля в массив стилей класса
+        myClass.setStyle(style);
+        // Вывод обновленного CSS кода класса в элемент p с id 'output'
+        document.getElementById('output1').innerHTML = myClass.getCss();
+      }
+
+      function removeStyle() {
+        if (!myClass) {
+          alert('Сначала нажмите кнопку "Показать результат генерации"');
+          return;
+        }
+        // Получение значения из элемента input с id 'remove-style'
+        let style = document.getElementById('remove-style').value;
+        // Удаление стиля из массива стилей класса
+        myClass.removeStyle(style);
+        // Вывод обновленного CSS кода класса в элемент p с id 'output'
+        document.getElementById('output1').innerHTML = myClass.getCss();
+      }*/
+    
+//3
+const day = document.getElementById('day');
+const hrs = document.getElementById('hrs');
+const min = document.getElementById('min');
+const sec = document.getElementById('sec');
+const currentYear = new Date().getFullYear();
+
+const newYear = new Date (`1 Jan ${currentYear + 1} 00:00:00`);
+
+function countdownDate(){
+const today = Date.now()
+const gap = newYear - today;
+let d = Math.floor(gap/1000/60/60/24);
+let h = Math.floor((gap/1000/60/60)%24);
+let m = Math.floor((gap/1000/60)%60);
+let s = Math.floor((gap/1000)%60);
+
+day.innerHTML = d<10 ? '0' + d : d;
+hrs.innerHTML = h<10 ? '0' + h : h;
+min.innerHTML = m<10 ? '0' + m : m;
+sec.innerHTML = s<10 ? '0' + s : s;
+}
+setInterval(countdownDate,1000);
+    </script>
+</body>
+</html>
